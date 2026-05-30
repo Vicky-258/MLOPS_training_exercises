@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Quality Predictor</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Presentation Quality Predictor</h1>
+            <p>Analyze and predict the impact of your presentation using AI</p>
+        </header>
+
+        <div class="glass-card">
+            <form action="/predict" method="post" class="predict-form">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="speaking_speed">Speaking Speed (wpm)</label>
+                        <input type="number" step="any" id="speaking_speed" name="speaking_speed" placeholder="e.g. 120" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="filler_words">Filler Words (count)</label>
+                        <input type="number" step="any" id="filler_words" name="filler_words" placeholder="e.g. 5" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pause_count">Pause Count</label>
+                        <input type="number" step="any" id="pause_count" name="pause_count" placeholder="e.g. 10" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="eye_contact">Eye Contact (%)</label>
+                        <input type="number" step="any" id="eye_contact" name="eye_contact" placeholder="e.g. 85" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="tone_variation">Tone Variation</label>
+                        <input type="number" step="any" id="tone_variation" name="tone_variation" placeholder="e.g. 0.8" required>
+                    </div>
+                </div>
+
+                <div class="submit-container">
+                    <button type="submit" class="glow-button">
+                        <span>Analyze Performance</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if prediction_text %}
+        <div class="result-card show">
+            <div class="result-content">
+                <h3>Analysis Result</h3>
+                <div class="prediction-value">
+                    <span class="highlight">{{ prediction_text.split(': ')[1] if ':' in prediction_text else prediction_text }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
